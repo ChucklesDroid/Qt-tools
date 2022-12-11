@@ -1,0 +1,98 @@
+Syntax of a rule in Makefile:-
+
+target: pre-requisites
+	recipe
+
+Target may not necessarily be a file it can even be a phony target.Eg:-
+verbose: 
+	echo "Hello World"
+
+
+Note:- on executing the above lines of code as Makefile, the output will also contain the command as well as the output of the echo command. In case we only want the output and not the command as well in the output of the Makefile we make use of '@' to achieve this.
+
+verbose:
+	@echo "Hello World"
+
+
+Example of a Makefile containing multiple targets:
+verbose:
+	@echo "Hello World"
+install:
+	@echo "creating files"
+	touch file-{1..10}.txt
+clean:
+	@echo "cleaning files"
+	rm *.txt
+
+On executing the above lines of code without any arguments, output will be as follows:-
+$make
+Hello World
+
+By default only the first target is executed which also called as default target.
+To execute other rules, it is expected the following targets must be called from the first target
+itself or we can make use of a phony target called 'all' and specify all the targets that need to
+be executed.
+
+Example using phony target 'all':-
+all: verbose install
+verbose:
+	@echo "Hello World"
+install:
+	@echo "creating files"
+	touch file-{1..10}.txt
+clean:
+	@echo "cleaning files"
+	rm *.txt
+
+Example by changing our default target:-
+.DEFAULT_GOAL := install
+verbose:
+	@echo "Hello World"
+install:
+	@echo "creating files"
+	touch file-{1..10}.txt
+clean:
+	@echo "cleaning files"
+	rm *.txt
+
+Example using 'PHONY' target:-
+.PHONY: all verbose install
+all: verbose install
+verbose:
+	@echo "Hello World"
+install:
+	@echo "creating files"
+	touch file-{1..10}.txt
+clean:
+	@echo "cleaning files"
+	rm *.txt
+
+**Note:- As seen from the above examples we don't include 'clean' target in 'all' as it should
+	be called by the user explicitly. It also must not be defined as the default target..
+	its bad practice.
+
+VARIABLES:
+
+We will be talking about 2 types of variables:-
+1) recursive expanded variable
+2) simple expanded variable
+
+Examples:-
+	cc = gcc	#Example of recursively expanded variable
+	CC := gcc	#Example of simple expanded variable
+
+Difference b/w the two:-
+	cc = ${cc}	#Not applicable
+	CC := ${CC}	#Perfectly valid 
+
+
+PATTERNS AND FUNCTIONS:
+
+Few automatic variables:-
+$@: represents the target
+$<: represents the first pre-requisite
+$^: represents the list of all space seperated pre-requisites
+
+Example makefile which compiles all the c source files to executable files with suitable names:-
+it is provided in Makefile file in the same directory as this file
+
