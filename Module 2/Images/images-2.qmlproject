@@ -1,0 +1,9 @@
+import QmlProject 1.0
+
+Project {
+    mainFile: "images-2.qml"
+
+    QmlFiles{
+        directory: "."
+    }
+}

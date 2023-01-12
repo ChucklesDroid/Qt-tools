@@ -19,7 +19,8 @@ Item{
 // Here we describe width as relative to width of textElement,
 // and the size of the rectangle will keep on increasing as the 
 // length of the text changes and since its a "TextInput", its size
-// will change
+// will change and accordingly so will the size of rectangle
+// demonstrating the declarative property of the language
         width: textElement.width
         color: "red"
     }
