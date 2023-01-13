@@ -8,8 +8,8 @@ AnimatedImage{
     source: "sample.gif"
     width: 500 ;height: 500
 
-    onStatusChanged: {
-        if (status == Image.ready) 
-            console.log(frameCount)
-    }
+    // onStatusChanged: {
+    //     if (status == Image.ready) 
+    //         console.log(AnimatedImage.frameCount)
+    // }
 }
