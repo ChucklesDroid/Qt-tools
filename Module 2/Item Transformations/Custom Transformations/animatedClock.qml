@@ -1,10 +1,17 @@
 // This program demonstrates the use of custom transformations in qml
+// Syntax: transform: list <Transform>
+
+// Transform is one of the 4 types:
+// 1) Rotation
+// 2) Scale
+// 3) Translate
+// 4) Matrix4x4
 
 import QtQuick 2.0
 
 Rectangle {
     width: background.width; height: background.height
-    color: "grey"
+    color: "lightgrey"
 
     Image{
         id: background
