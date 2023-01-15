@@ -4,11 +4,7 @@ import QtQuick 2.0
 
 Image{
     id: image
-<<<<<<< HEAD
     width: 1000; height: 1000
-=======
-    width: 1000; height: 800
->>>>>>> 9475110 (Local Files are restructured under Modules and Module 2 is added)
     source: "https://eoimages.gsfc.nasa.gov/images/imagerecords/74000/74393/world.topo.200407.3x5400x2700.jpg"
     fillMode: Image.PreserveAspectFit
     Rectangle{
@@ -16,11 +12,7 @@ Image{
         x: 0; y: 750;
         height: 50
     // The 'progress' variable holds a value b/w 0.0 to 1.0 ( 0 being image is not at all loaded and 1 being fully loaded )
-<<<<<<< HEAD
         width: 1000 * progress
-=======
-        width: 800 * progress
->>>>>>> 9475110 (Local Files are restructured under Modules and Module 2 is added)
     // The rectangle will be visible as long as the image is not fully loaded
         visible: progress != 1
     }
