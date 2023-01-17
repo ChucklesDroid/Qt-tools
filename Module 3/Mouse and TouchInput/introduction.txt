@@ -1,0 +1,11 @@
+'MouseArea' only responds to 'acceptedButtons'. To specify that MouseArea will respond to multiple buttons we use '|' together with the values.
+Eg: -
+MouseArea{
+    acceptedButtons: Qt.leftButton | Qt.rightButton
+}
+The handlers are not called for any other buttons but any click involving the 'allowedButtons' is reported.
+
+
+'containsMouse' is the property that holds wether the mouse is currently inside the 'MouseArea'.
+With 'hoverEnabled' to false, 'containsMouse' will only be valid when the mouse is pressed and the mouse is 
+inside the MouseArea.
