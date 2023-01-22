@@ -1,0 +1,17 @@
+In qml to create reusable components just like in C++ classes, we make use of 'components'
+There are 2 ways to make components in QML:-
+
+1) Components
+    a) Defined using the component item
+    b) As many as need, with a file-unique name
+    c) Used as templates for items
+    d) Used with models and views
+    e) Used with generated content
+    f) Can be instantiated dynamically
+
+2) Custom items 
+    a) Defined in seperate files
+    b) One main element per file
+    c) Used in the same way as standard items
+    d) Can have assosciated version number
+    e) The file must start with a Capital Letter
