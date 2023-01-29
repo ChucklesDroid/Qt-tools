@@ -15,3 +15,15 @@ There are 2 ways to make components in QML:-
     c) Used in the same way as standard items
     d) Can have assosciated version number
     e) The file must start with a Capital Letter
+
+Adding Custom Properties: 
+
+Syntax: [readonly] <type> <name> [: <value>]
+
+Examples: 
+    property string product: "QtQuick"
+    property int count: 123
+    property real slope: 123.456
+    property bool condition: true
+    property url address: "http://qt.io/"
+    readonly property int area: height*width
