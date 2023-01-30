@@ -1,0 +1,30 @@
+Functions syntax in qml:
+
+function <name>([parameter1...]){...}
+Example: 
+
+Item {
+    id: myItem
+    property string text: "hello"
+    function clear(){
+        text = "";
+        ...
+    }
+}
+
+Calling the function: myItem.clear()
+
+
+Signals and its handlers:
+
+signal syntax: signal <name>[(<type> <name>,...)]
+handler syntax: on<Name>: <expression>
+
+Examples of signals:
+
+signal clicked
+its handled by 'onClicked' signal handler
+
+signal checked(bool checkValue)
+its handled by onChecked
+'checkValue' is passed as parameter to the function
