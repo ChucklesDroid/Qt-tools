@@ -50,6 +50,7 @@ Rectangle {
         delegate: nameDelegate
         focus: true
         clip: true
+        // keyNavigationWraps: true
 
         header: Rectangle {
             height: 10
