@@ -1,0 +1,51 @@
+SIGNALS AND SLOTS
+
+
++ Video Referrence: https://www.youtube.com/watch?v=xHd5Ga8uihE&list=PL6CJYn40gN6hdNC1IGQZfVI707dh9DPRc&index=39
++ Lets take an example of a slider and SpinBox. Idea here is when any changes are made to the Slider,
+  its value should be reflected in the SpinBox. Way this is implemented is shown in the flow chart below:-
+
+
+---------------------------------------------------------------------------
+- SIGNAL EMITTED ---->>   SIGNAL-SLOT CONNECTION ----->> SLOT IMPLEMENTED -
+---------------------------------------------------------------------------
+
+
+Eg of Signal Emitted:-
+----------------------
+
+void QSlider::mouseMoveEvent(...)
+{
+    emit valueChanged(newValue);
+}
+
++ Here 'emit' keyword is essential for the signal to be emitted. In this example the signal is being emitted from the slider
+  and signal emitted is 'valueChanged'. This is all there is to the first step.
+
+
+Eg of Signal/Slot Connection:-
+------------------------------
+
+QObject::connect( slider, QSlider::valueChanged,
+                  spinBox, QSpinBox::setValue );
+                
++ Here the important function is "QObject::connect" which is a static function.
+  it takes 4 arguments in the order:-
+  
+  a) The first argument is 'Who is emitting signal'
+  b) The second argument is 'Which signal is being implemented'
+  c) The third argument is 'Who is implementing the slot or the method we are connecting to'
+  d) The fourth argument is 'Which method are we connecting it to'
+
+
+Eg of Slot Implemented:-
+------------------------
+
+void QSpinBox::setValue( int value )
+{
+    ...
+    m_value = value ;
+    ...
+}
+
++ Slot implementation is just a regular C++ function.

@@ -1,0 +1,123 @@
+Qt's C++ object Model
+
++ QObject is the heart of Qt's object Model
++ Adds features to C++ like: 
+    + Signals and Slots
+    + Properties
+    + Event Handling
+    + Memory Management
+    + ...
++ Some features are standard C++
+    + Some use Qt's meta-object System.
++ QObject has no visual representation.
+------------------------------------------------------------------------------------------------------------------
+
+Object Tree
+
+{ 
+  In short, if a child is deleted then it will be removed from the object tree of the parent
+  and if a parent is deleted then all the children will be deleted from the object tree of the parent
+  So basically we can keep pointers to the top of the object tree and delete those when we need to do so
+}
++ QObjects organize themselves in object trees.
+    + Based on parent-child relationship
++ QObject( QObject *parent = null )
+    + Parent adds objects to list of children.
+    + Parent owns children.
++ Construction/Destruction
+    + Tree can be constructed in any order
+    + Tree can be destroyed in any order
+        + If object has a parent, object is first removed from parent
+        + If object has a children, each child is deleted first.
+        + No object is deleted twice.
+
+** Note: Parent-child relationship is not Inheritance.
+
+------------------------------------------------------------------------------------------------------------------
+
+Creating objects
+
+{
+  Objects that are Inherited from QObject are created using new but not all elements 
+  that start with 'Q' will be instanitated using new like 'QString'.
+}
++ On Heap - QObject with parent:
+    QTimer *timer = new QTimer(parent) ;
+
+    ** it is forbidden to copy QObject instances.
+
++ On Stack- QObject without parent:
+    + QFile, usually local to a function
+    + QGuiApplicaiton( local to main() )
+    
++ On Stack-"value" types
+
+    QString name;
+    QStringList list;
+    QColor color; 
+
+    ** implicitly shared- cheap to copy
+    ** "Value" types are not QObject subclasses.
+
+------------------------------------------------------------------------------------------------------------------
+
+Meta Data for Objects: Use Case
+
++ Runtime type information in C++ limited
++ Meta data required at runtime for 
+    + Dynamic API adapters
+        + QML, D-Bus, QWebChannel, QtRemoteObjects
+    + Tooling
+        + Generic property editor, UI designer
+
+------------------------------------------------------------------------------------------------------------------
+
+Meta Data for Objects: Qt Solution
+
++ Code generator moc for meta data and related access functions
++ Markup in C++ class headers with C++ preprocessor macros.
+    Eg: signals, emit, Q_PROPERTY, the trigger flags
+    + valid input for C++ compiler
+    + Structured input for code generator
+    + "Syntactic sugar" to make developer intent easier to understand
+
++ Required Build steps:
+    1. moc -o moc_myclass.cpp moc_myclass.h
+    2. c++ -c myclass.cpp; c++ -c moc_myclass.cpp
+    3. c++ -o myapp moc_myclass.o myclass.o
+    + Build systems like qmake or cmake take care of this for you
+
+------------------------------------------------------------------------------------------------------------------
+
+Trigger Flags for Moc
+
++ Moc can hadle multiple classes per header
+    + Generates code only for those with trigger flags
+    Eg: 
+    class Foo {
+        // no Trigger Flags, moc skips it
+    };
+
+    class Person {
+        Q_GADGET
+    };
+
+    class Timer: public QObject {
+        Q_OBJECT
+    }
+    
+    + QGADGET 
+        + Enhances value classes with meta object information
+
+    + QOBJECT
+        + Enhances value classes with meta object information
+        + Required for signals and slots
+
+    + Common features of Q_OBJECT and Q_GADGET:
+        + Allow to declare properties for accessing data fields by name.
+        + Allow to mark methods as invokable by name.
+
+** Additional Info: Q_ENUM is used to enumerations in QML
+** Note: Subclassing from QObject costs 60 bytes per class
+
+------------------------------------------------------------------------------------------------------------------

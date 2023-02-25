@@ -1,0 +1,41 @@
+SIGNALS and SLOTS
+
++ There are 3 different ways to implement signals and slots, which are as follows:
+a) Function pointer
+b) SIGNAL/SLOT macro 
+c) Fuction objects
+
+FUNCTION POINTER  
+----------------
+
++ Syntax: 
+QObject::connect( const QObject * sender, PointerToMemberFunction signal,
+                const QObject *reciever, PointerToMemberFunction sender )
+
++ Example:
+QSpinBox *spin = new QSpinBox
+QSlider *slider = new QSlider( Qt::Horizontal )
+QObject::connect( slider, &QSlider::valueChanged,
+                spin, &QSpinBox::setValue )
+
+
+
+SIGNAL/SLOT MACRO
+-----------------
+
++ Syntax:
+QObject( const QObject *sender, const char *signal,
+        const QObject *reciever, const char *method )
+
++ Example:
+QObject::connect( slider, SIGNAL(valueChanged( int )) 
+                spin, SLOT(setValue( int )) )
+
+**Note: We are not allowed to name parameters.
+QObject::connect( slider, SIGNAL( int value)  // it should only be int not 'int value'
+                spin, SLOT( int newValue ) ) // Similarly it should only be int not 'int newValue'
+
++ Short-comings of Connect-Macros:
+a) No compile time checking - runtime errors
+b) No implicit conversions
+c) Simple overloaded resolution
