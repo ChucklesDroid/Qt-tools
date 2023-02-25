@@ -4,8 +4,6 @@ There are 3 different ways in which function Objects are connected to signal/slo
 + Functors: a functor is an object that implements the operator 'parenthesis open', 'parenthesis close'.
 + Standalone Functions
 
-Functor Example:
-=======
 Functor:
 A functor is a type of function object in C++, which is an object that can be called like a function. 
 It is a way to create a function that has state, i.e., it can remember values between calls.
