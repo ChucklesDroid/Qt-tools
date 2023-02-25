@@ -4,10 +4,6 @@ There are 3 different ways in which function Objects are connected to signal/slo
 + Functors: a functor is an object that implements the operator 'parenthesis open', 'parenthesis close'.
 + Standalone Functions
 
-<<<<<<< HEAD
-Functor Example:
-=======
-<<<<<<< HEAD
 Functor Example:
 =======
 Functor:
@@ -21,8 +17,6 @@ For example, in Qt, functors are often used as slots in signal-slot connections,
 Overall, functors are a powerful feature of C++ that allow developers to create flexible and reusable code blocks that can be used in different contexts. 
 They are a key tool in modern C++ programming and are used extensively in libraries and frameworks like Qt.
 
->>>>>>> 8910d2a (lambda functions and signals/slots)
->>>>>>> c88f3b4 (lambda functions and signals/slots)
 + Example:
 QObject::connect(lineEdit, &QLineEdit::textChanged, LogString("Log: "));
 
