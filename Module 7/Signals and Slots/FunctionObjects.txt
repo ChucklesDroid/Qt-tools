@@ -1,0 +1,75 @@
+There are 3 different ways in which function Objects are connected to signal/slots:
+
++ Lambda functions
++ Functors: a functor is an object that implements the operator 'parenthesis open', 'parenthesis close'.
++ Standalone Functions
+
+Functor Example:
++ Example:
+QObject::connect(lineEdit, &QLineEdit::textChanged, LogString("Log: "));
+
+struct LogString {
+    LogString( const QString &prefix ): m_prefix(prefix){}
+
+    void operator () ( const QString &string ) {
+        qDebug() << m_prefix + string;
+    }
+
+    private:
+        QString m_prefix;
+};
+
+Lambda Functions Examples:
+
++ Syntax:
+QObject::connect( const QObject *sender, PointerToMemberFunction signal,
+                  Functor fuctor)
+
++ Example: 
+QPushButton *button = new QPushButton( "Press Me !" );
+QObject::connect( button, &QPushButton::pressed,
+                  [button]{ button->setText("Release Me !" )}); 
+
+***NOTE: You should not write all your slots in the lambda expressions:
+a) Then whatever goes into the body of that lambda expression, you cannot reuse that. 
+b) Where do I write those connection statements? Very likely in a constructor of whatever 
+the class is doing. And now the constructor is changed into 5000 lines of code of 10 lambda 
+expressions that each have 400 lines of code in them. That is a pretty bad design.
+
+
++ Problem with Lambda Expressions: 
+Example:
+--------
+QLabel *secondWindow = new QLabel("Click the button in the other window."
+                                  "Then close this window and reclick the button." )
+
+secondWindow->setWordWrap(true);
+secondWindow->resize(400, 200); 
+secondWindow->setAttribute(QT::WA_DeleteOnClose)
+
+QObject::connect( pressMeButton, &QPushButton::clicked,
+                  [secondWindow]{
+                    secondWindow->setText(secondWindow->text() + 
+                                          "\nButton Closed");
+                  });
+window->show();
+secondWindow->show();
+
+In this example snippet part of the larger code base, when we compile this two window, opens up
+both of them connected to each other. So basically when secondWindow is closed, it will also destroy 
+all its children as well( because of QT::WA_DeleteOnClose ).
+
+But since the pressMeButton referrenced in the first window is still connected to the secondWindow.
+As a result when we press the 'pressMeButton' button again, the application will crash.
+To overcome this we use the following code snippet:-
+
+Example:
+--------
+QObject::connect( pressMebutton, QPushButton::clicked,
+                  secondWindow,
+                  [secondWindow]{ 
+                    secondWindow->setText(secondWindow->text() +
+                                          "\nButton Closed");
+                  })
+
+The third argument 'secondWindow' is not a slot rather its just a simulation for the lambda function.
