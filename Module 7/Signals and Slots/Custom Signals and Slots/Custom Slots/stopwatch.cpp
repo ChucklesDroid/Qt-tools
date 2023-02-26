@@ -11,6 +11,7 @@ Stopwatch::Stopwatch(QObject *parent)
     QTimer *timer = new QTimer(this); // this operator means timer object is created as a child of Stopwatch
     connect( timer, &QTimer::timeout,
             this, &Stopwatch::addOneSecond);
+// 3rd argument needs to be QObject to comply with moc
     timer->start(1s);
 }
 
