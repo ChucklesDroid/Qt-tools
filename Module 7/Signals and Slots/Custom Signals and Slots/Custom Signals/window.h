@@ -10,7 +10,7 @@ class Window : public QWindow
 {
     Q_OBJECT
 
-// We do not implement signals 
+// We do not implement signals since we have specified it as a signal rather than a regular function.
     signals:
         void positionChanged(const QPoint &point);
 
