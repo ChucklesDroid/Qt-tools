@@ -1,0 +1,44 @@
+QVARIANTS
+=========
+
++ QVariant in C++ backend is like union but a more advanced version of union. It overcomes two disadvantages of Union's namely:
+    a) You dont know in Union which data type its used where as in Union you can tell which data type it has used.
+    b) It has the ability to extend so as to add new data types.
+
++ QVariant features and properties are as follows: 
+    a) It is a union for common Qt "value types" {copyable, assignable}.
+    b) Supports implicit sharing (fast copying).
+    c) Supports user types.
+
++ For Qt Core types: QVariant resides in QtCore libraries:
+    An example code of initialising a variable of type that resides in <QtCore> library(here QVariant).
+
+    QVariant variant(42);
+    int value = variant.toInt(); // reads back
+    qDebug() << variant.typeName(); // int
+
+
++ For Non-QtCore types: (basically non-core and custom types)
+    Example taken in QColor which resides in QGUI library.
+
+    QVariant variant = QVariant::fromValue(QColor(Qt::red));
+    QColor value = variant.value<QColor>(); // read back
+    qDebug() << variant.typeName(); // "QColor"
+
++ Requirements for Non QtCore library defined data structures(custom data structures):
+    a) 3 Requirements are there: it should have default constructor, copy constructor and assignment operator.
+    b) should appear after class definition in header file followed by 'Q_DECLARE_METATYPE' macro. The reason
+    for this is 'Q_DECLARE_METATYPE' needs to know about the complete definition of the class
+
+    Example: 
+    #include <QMetaType>
+    
+    class Contact {
+        public: 
+            void setName(const QString &Name);
+            QString name() const;
+        private:
+            QString m_name;
+    };
+
+    Q_DECLARE_METATYPE(Contact)

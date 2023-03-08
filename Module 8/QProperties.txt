@@ -1,0 +1,78 @@
+QPROPERTIES
+===========
+
++ Lets start this with an example: 
+    Text {
+        text: "Hello world!!"
+    }
+
+So in the above code QQuickText is the C++ class that provides 'Text' qml implementation 
+In the above example 'Text' element goes through following conversions: 
+    
+   ** 'Text' ==>> 'QVariant' ==>> some method will be called on this that will take two arguments 'QVariant' and 'Hello world!!" string
+
+    + that method maybe setProperty inherited from QObject and will take 2 arguments namely QVariant and 'helloWorld' string
+ 
++ Macro for mapping property names to getter and setter functions:
+syntax for QProperty:
+    QProperty( type name
+                (READ getFunction [WRITE setFunction] | MEMBER memberName)
+                (NOTIFY notifySignal | CONSTANT) [FINAL]...)
+
++ An indirect way to call getters/setter of QObjects:
+    QVariant property(const char* name) const; // getter function generalised where QVariant is the return type of the getter function here
+    void setPropety(const char* name, const QVariant &value) // setter function generalised where it takes 2 arguments the name of the property and the property
+
+    ** if name is not declared as Q_PROPERTY then its a dynamic property
+
++ Class reflection provided by QMetaObject and QMetaProperty. Class reflection basically means ability to look at C++ classes properties and attributes
+Here that is provided by QMetaObject and QMetaProperty.
+
+*** Note: 
+    + Q_OBJECT and Q_GADGET macros are required by properties to work.
+    + QMetaObject knows nothing about dynamic properties.
+
+
+++ Semi Realistic Example of such a C++ class is as follows: 
+
+Class Customer : public QObject {
+    Q_OBJECT
+
+    Q_PROPERTY(QString name READ getName WRITE setName NOTIFY nameChanged);
+    Q_PROPERTY(QString phone MEMBER m_phone NOTIFY phoneChanged);
+    Q_PROPERTY(QDate dateEstablished READ getDateEstablished CONSTANT); // Read only 
+    Q_PROPERTY(CustomerType type READ getCustomer CONSTANT); // Read only 
+
+public:
+    enum CustomerType {
+        Corporate, Individual, Educational, Government
+    };
+    Q_ENUMS(CustomerType)
+
+    QString getName() const;
+    void setName(const QString &name);
+
+    QDate getDateEstablished() const;
+    CustomerType getCustomerType() const;
+
+signals:
+    void nameChanged();
+    void phoneChanged();
+
+private:
+    QString m_name;
+    QString m_phone;
+    QDate m_dateEstablished;
+    CustomerType m_customerType;
+};
+
+
++ Direct/Indirect setting/getting
+
+    a) Direct Setting
+        customer.setAddress("Complaints...");
+        const QVariant address = customer.property("address");
+
+    b) Indirect Setting
+        const QVariant name(QString("Sirius...")); // initialising name a QVariant property 
+        customer.setProperty("name", name); // indirect setting taking 2 arguments property->'name' and QVariant
