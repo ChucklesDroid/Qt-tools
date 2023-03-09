@@ -1,0 +1,14 @@
+Simple Compound Value Types
+===========================
+
++ Simple types map directly to QML types
+    Eg: numbers, strings
+
++ Qt Compound types have access to sub values enabled
+    Eg: QSize as we saw in the prev example we could use .height and .width
+
++ Custom Compound types by default only opaque
+    Can only be passed as in b/w C++ and QML
+
+But to make use of Compound Values on the C++ side all we have to do is make them into Gadgets
+

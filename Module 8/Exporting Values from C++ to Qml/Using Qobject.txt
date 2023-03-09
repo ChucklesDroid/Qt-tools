@@ -1,0 +1,48 @@
+Using QObject to export values from C++ to QML side
+===================================================
+
++ The properties that will be available on the qml side are:
+    a) properties
+    b) Signals
+    c) slots
+    d) Methods marked with Q_INVOCABLE macro
+    e) Enums registered with Q_ENUM
+
++ So flow of data that takes place when any changes are made on the QML side and how they are 
+affected on the C++ side.
+
+    a) Q_PROPERTY: This basically creates data members on C++ side which are accessible on the QML
+    side. It takes care of fetching data using getters and assigning datas using setters both of which
+    are implemented by the user.
+    
+    We have a custom signal that gets emitted whenever a change is made to the data member and accordingly 
+    the getter is called to make that change at the C++ level.
+
+    b) Sometimes we would like values to be returned by a slot which does not return any value in such case
+    we make use of Q_INVOCABLE to achieve that, basically the function gets exposed to the qml side and can 
+    be accessed directly.
+
+QObject Ownership
+=================
+
++ There are two types of ownership in Qml-Cpp application:
+    a) QObjects are either owned by QML engine(QQmlEngine::JavascriptOwnership)
+    b) Objects that are owned by C++ (QQmlEngine::CppOwnership)
+
++ This ownership is automatically chosen based on heuristics:
+    a) QObjects created in C++ are owned by QQmlEngine::CppOwnerShip
+    b) QObjects created in QML side are owned by QQmlEngine::JavascriptOwnership
+
+*** Note: There is an exception to this rule.
+EXCEPTION: Parent-less objects returned by Q_INVOKABLE are owned by QQmlEngine::JavascriptOwnership
+
++ THE EXCEPTION SPECIFIED ABOVE CAN CAUSE DANGLING POINTERS
+-----------------------------------------------------------
+    To avoid that we have 2 options: 
+        a) Define a parent to the Q_OBJECT pointer passed through the Q_INVOCABLE.
+        b) Change the ownership on the C++ side to QQmlEngine::CppOwnership. 
+            Eg:
+            QQmlEngine::setObjectOwnership(m_users[index], QQmlEngine::CppOwnership);
+
+
+*** BONUS: To call the garbage collector on the qml side explicitly use "gc();"
