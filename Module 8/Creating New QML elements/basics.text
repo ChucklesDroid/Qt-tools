@@ -1,0 +1,62 @@
+Creating new elements from C++ for QML
+======================================
+
++ There are 4 requirements to create elements on the qml side from C++:
+    a) In C++: Subclass from either QObject or QQuickItem. QQuickItem allows the elements to be visible.
+    b) In C++: Register the type with the QML environment.
+    c) In Qml: import the module containing the new item.
+    d) In Qml: Use the item like any other standard item.
+
++ In depth example of this: 
+
+==> Step 1) Example:
+    ----------------
+
+    #include <QTimer>
+    
+    class QTimer;
+
+    Class RandomTimer: public QObject
+    {
+        Q_OBJECT
+    public:
+        RandomTimer(QObject *parent = nullptr);
+    private:
+        QTimer *m_timer;
+    }
+    **NOTE: offcourse there will be implementation step required. In this case for constructor
+
+
+==> Step 2) Example:
+    ----------------
+
+    int main(int argc, char *argv[])
+    {
+        ...
+        qmlRegisterType<RandomTimer>("CustomComponents", 1, 0, "RandomTimer");
+        ...
+    }
+    EXPLANATION: qmlRegisterType is a Q_VECTOR:
+        1) here the first argument is how we will refer the import statement in qml side.
+        2) 2nd and 3rd arguments are version types with 2nd argument being major version and 3rd argument being minor version.
+        3) 4th argument is type name that we will refer at the qml side.
+
+==> Step 3+4) Example: 
+    ------------------
+
+    ...
+    import CustomComponents 1.0
+    ...
+    Rectangle {
+        ...
+        RandomTimer {
+            id: timer
+            interval: timer.randomInterval(500,500) // this is provided by QObject class
+
+            onTimeOut: {
+                console.log("Timer fired");
+                ...
+            }
+        }
+        ...
+    }
