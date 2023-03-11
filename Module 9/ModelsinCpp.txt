@@ -1,0 +1,79 @@
+MODELS IN C++
+=============
+
+In QMl/C++ models are implemented through QAbstractListModel/QAbstractItemModel. Both of which are abstract
+classes whose methods we have to override to implement the data querrying functionalities. So to sum it up 
+these abstract models provide an interface to manipulate data. In our example we will be having a struct data
+structure to store data.
+
+Read only list mode
+===================
+    a) It inherits from QAbstractListModel.
+    b) It overrides the following methods:
+       int rowCount(const QModelIndex &parent) const;
+       QVariant data(const QModelIndex &index, int role=Qt::DisplayRole) const; //===> this the most important method to querry data
+    
+    + In method data, the first argument is an index(basically which attribute to look at), the second argument is what aspect of that data(for eg in case of struct Data which data member)
+
+***NOTE: beginInsertRows and endInsertRows are both methods that indicate to the view that insertion is going to happen and insertion has 
+ended respectively. They are both members of the QAbstractItemModel.
+
+Proxy Models
+============
+
+   In C++, a proxy model is a type of model that modifies the data of an existing model, but does not change the underlying data. 
+   It is a design pattern that allows you to modify the data representation of a model without changing the data itself. 
+   Proxy models provide a way to customize the behavior of a model, without having to modify the original model.
+
+   Proxy models can be used to perform tasks such as filtering, sorting, or transforming data. They can also be used to provide additional 
+   functionality to a model, such as caching or lazy-loading data.
+
+   + It solves 2 main problems:
+   ----------------------------
+      a) It prevents having different instances of the object and having to setup a communication b/w them.
+      b) It prevents Model to be diluted.
+
+   + Setting up a Proxy-Model:
+   ---------------------------
+   Eg:
+   ---
+
+   model = ... // setting up the source model
+
+   proxy = new QSortFilterProxyModel(parent);
+   
+   // inserting proxy model b/w model and view
+   proxy->setSourceModel(model);
+
+   view.rootContext->setContextProperty("_cppModel", model);
+   view.rootContext->setContextProperty("_cppProxyModel", proxy);
+
+   + Proxy Model Classes:
+   ----------------------
+
+   There are 3 proxy model classes: 
+      a) QAbstractProxyModel
+      b) QIdentityProxyModel
+      c) QSortFilterProxyModel
+
+   + QAbstractProxyModel  ===> Rarely used
+   ---------------------
+    * Its an abstract base class for all proxy models.
+    * It is used to implement any index, row or column based model transformation.
+    * It implements a number of methods that you might not need yourself:
+      1) data(), setData(), headerData(), setHeaderData(), flags(), setItemData(), itemData(), buddy()
+      2) canFetchMore(), fetchMore()
+
+   + QIdentityProxyModel ===> Commonly Used
+   ---------------------
+    * Proxy a source model without modifying it.
+    * Useful as base class for transforming data
+
+   + QSortFilterProxyModel ===> Commonly used
+   -----------------------
+    * Sorting and filtering of the model data.
+   
+--------------------------------------------------------------------------------------------------------------------
+|***NOTE: 1) Proxy Models acts as a view to the sourceModel() and acts a model to the view above                   |
+|         2) You would have to override the virtual functions of the QIdentityModelIndex and QSortFilterProxyModel |
+--------------------------------------------------------------------------------------------------------------------
