@@ -34,8 +34,8 @@ QObject::connect( slider, QSlider::valueChanged,
   
   a) The first argument is 'Who is emitting signal'
   b) The second argument is 'Which signal is being implemented'
-  c) The third argument is 'Who is implementing the slot or the method we are connecting to'
-  d) The fourth argument is 'Which method are we connecting it to'
+  c) The third argument is 'Who is implementing the slot or the method we are connecting to' i.e object whose method will be called (instance of the class)
+  d) The fourth argument is 'Which method are we connecting it to' i.e method of the Class that would be called
 
 
 Eg of Slot Implemented:-
