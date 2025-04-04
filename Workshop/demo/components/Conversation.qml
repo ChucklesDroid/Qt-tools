@@ -68,8 +68,6 @@ Rectangle {
 
         RowLayout {
             anchors.fill: parent
-            //Layout.fillWidth: true
-            //Layout.fillHeight: true
 
             Image {
                 id: searchIcon
@@ -100,16 +98,7 @@ Rectangle {
         }
 
         Flow {
-            //id: filterChips
-
             anchors.fill: parent
-            //anchors {
-            //    top: searchBar.bottom
-            //    left: parent.left
-            //    leftMargin: 10
-            //    topMargin: 10
-            //    right: parent.right
-            //}
             spacing: 3
             anchors {}
             Repeater {
@@ -142,37 +131,34 @@ Rectangle {
     ListView {
         id: conversationListView
 
-        //TODO: fix anchors here
         anchors {
             top: filterChips.bottom
             topMargin: 40
             left: parent.left
             leftMargin: 10
             right: parent.right
+            rightMargin: 12
+            bottom: parent.bottom
         }
-        //clip: true
-        //anchors.fill: parent
+
+        spacing: 2
 
         ListModel {
             id: conversationListModel
             ListElement { 
                 name: "John Nolan" 
-                time: ""
                 chat: "I want to be a TO!"
             }
             ListElement {
                 name: "Nyla Harper"
-                time: ""
                 chat: "I think I can smell meth in the air!"
             }
             ListElement {
                 name: "Wesley Evers"
-                time: ""
                 chat: "DA wants to charge you!"
             }
             ListElement {
                 name: "Tim Bradford"
-                time: ""
                 chat: "Pickup your cellphone boot!"
             }
         }
@@ -180,35 +166,21 @@ Rectangle {
         model: conversationListModel
         delegate: Rectangle {
             color: "#2b3842"
-            width: conversationList.width
-            height: contactName.implicitHeight + chat.implicitWidth
+            width: conversationListView.width
+            height: 100
 
             ColumnLayout {
                 anchors.fill: parent
-                spacing: 0
 
-                RowLayout {
+                Text {
+                    id: contactName
                     Layout.fillWidth: true
-
-                    Text {
-                        id: contactName
-                        text: model.name
-                        color: "white"
-                    }
-                    Item {
-                        Layout.fillWidth: true
-                    }
-                    Text {
-                        text: "test"
-                        color: "white"
-                    }
+                    text: model.name
                 }
-
                 Text {
                     id: chat
                     Layout.fillWidth: true
-                    text: model.chat
-                    color: "white"
+                    text:model.chat
                 }
             }
         }
