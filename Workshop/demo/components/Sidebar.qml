@@ -1,13 +1,13 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.0
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
 
 Rectangle {
     id: sidebar
 
     color: "#202c33"
 
-    implicitWidth: 40
+    implicitWidth: 60
     implicitHeight: 800
 
     ColumnLayout {
@@ -15,8 +15,8 @@ Rectangle {
 
         Button {
             Layout.alignment: Qt.AlignCenter
-            Layout.preferredHeight: 28
-            Layout.preferredWidth: 28
+            Layout.preferredHeight: 40
+            Layout.preferredWidth: 40
             icon {
                 source: "../images/chats.png"
             }
@@ -26,32 +26,32 @@ Rectangle {
                 source: "../images/status.png"
             }
             Layout.alignment: Qt.AlignCenter
-            Layout.preferredHeight: 28
-            Layout.preferredWidth: 28
+            Layout.preferredHeight: 40
+            Layout.preferredWidth: 40
         }
         Button {
             icon {
                 source: "../images/channels.png"
             }
             Layout.alignment: Qt.AlignCenter
-            Layout.preferredHeight: 28
-            Layout.preferredWidth: 28
+            Layout.preferredHeight: 40
+            Layout.preferredWidth: 40
         }
         Button {
             icon {
                 source: "../images/communities.png"
             }
             Layout.alignment: Qt.AlignCenter
-            Layout.preferredHeight: 28
-            Layout.preferredWidth: 28
+            Layout.preferredHeight: 40
+            Layout.preferredWidth: 40
         }
         Button {
             icon {
                 source: "../images/ai.png"
             }
             Layout.alignment: Qt.AlignCenter
-            Layout.preferredHeight: 28
-            Layout.preferredWidth: 28
+            Layout.preferredHeight: 40
+            Layout.preferredWidth: 40
         }
         Item {
             Layout.fillHeight: true
@@ -61,13 +61,16 @@ Rectangle {
                 source: "../images/settings.png"
             }
             Layout.alignment: Qt.AlignCenter
-            Layout.preferredHeight: 28
-            Layout.preferredWidth: 28
+            Layout.preferredHeight: 40
+            Layout.preferredWidth: 40
         }
         Button {
+            icon {
+                source: "../images/me.png"
+            }
             Layout.alignment: Qt.AlignCenter
-            Layout.preferredHeight: 28
-            Layout.preferredWidth: 28
+            Layout.preferredHeight: 40
+            Layout.preferredWidth: 40
         }
     }
 }

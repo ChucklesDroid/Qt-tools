@@ -57,10 +57,10 @@ Rectangle {
                 right: parent.right
             }
             // color: lv.currentIndex == index ? "yellow" : "lightGray"
-// To make this component reusable instead of hard-coding the id of ListView, we can make use of 'ListView.view'
-// to achieve the same thing. 
-// Note: 'ListView.view' will only be available to the topmost element  
-// we can bipass this by using 'parent.', defining a readonly ListView type property or by using the id of the topmost element
+            // To make this component reusable instead of hard-coding the id of ListView, we can make use of 'ListView.view'
+            // to achieve the same thing. 
+            // Note: 'ListView.view' will only be available to the topmost element  
+            // we can bipass this by using 'parent.', defining a readonly ListView type property or by using the id of the topmost element
             // color: ListView.view.currentIndex == index ? "yellow" : "lightGray"
             color: __lv.currentIndex == index ? "yellow": "lightGray"
 
@@ -69,7 +69,7 @@ Rectangle {
                 text: model.name
                 font.pixelSize: 32
 
-// To see the elements being deleted and generated we make use of signal handlers onCompleted and onDeleted
+            // To see the elements being deleted and generated we make use of signal handlers onCompleted and onDeleted
                 Component.onCompleted: console.log("Welcome", model.index, model.name)
                 Component.onDestruction: console.log("Die", model.index, model.name)
             }
@@ -94,10 +94,10 @@ Rectangle {
         model: nameModel
         delegate: nameDelegate
         clip: true
-// cacheBuffer describes the total lines of one pixel height that would be created but not displayed
-// above or below the view
-        // cacheBuffer: 40
-// To check the default value of cacheBuffer
+        // cacheBuffer describes the total lines of one pixel height that would be created but not displayed
+        // above or below the view
+                // cacheBuffer: 40
+        // To check the default value of cacheBuffer
         // Component.onCompleted: console.log(cacheBuffer)
         onCurrentIndexChanged: console.log(currentIndex)
     }
